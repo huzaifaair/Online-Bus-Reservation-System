@@ -1,8 +1,8 @@
-🚌 ### Online Bus Reservation System (OBRS)
+**🚌 ** Online Bus Reservation System (OBRS)****
 
 A full-stack web application built with ASP.NET Core MVC and SQL Server that simplifies bus ticket booking, seat management, and revenue tracking.
 
-✨ ##Features
+**✨ Features**
 👤 User Panel
 
 Search for buses by route & date
@@ -13,7 +13,7 @@ Book and manage tickets
 
 E-ticket generation
 
-👨‍💼 ##Admin Panel
+**👨‍💼 Admin Panel**
 
 Manage buses, routes, prices, and schedules
 
@@ -23,7 +23,7 @@ Track revenue and generate reports
 
 Manage users and roles
 
-📊 ##Dashboard
+**📊 Dashboard**
 
 Real-time insights (bookings, revenue, users)
 
@@ -31,7 +31,7 @@ Key statistics with counters
 
 Graphical reports
 
-🔐 ##Authentication & Authorization
+**🔐 Authentication & Authorization**
 
 Secure login & registration
 
@@ -39,7 +39,7 @@ Role-based access (Admin / User)
 
 Identity Framework integration
 
-🏗️ ##System Architecture
+**🏗️ System Architecture**
 
 The project follows a 3-Tier Architecture:
 
@@ -49,7 +49,7 @@ Business Layer → Controllers & Services
 
 Data Layer → Entity Framework Core + SQL Server
 
-🔄 ##Project Flow
+**🔄 Project Flow**
 
 User searches for buses
 
@@ -64,7 +64,7 @@ Admin manages bookings (approve/reject/cancel)
 Reports & revenues are generated
 
 
-🗄️ ##Database Design
+**🗄️ Database Design**
 
 Main tables in the system:
 
@@ -78,10 +78,10 @@ tbl_prices → stores fare (Base Fare, Final Fare)
 
 tbl_bookings → booking details (UserId, BusId, Seat, Status, Dates)
 
-📌 ##ERD (Entity Relationship Diagram):
+**📌 ERD (Entity Relationship Diagram):**
 
 
-🛠️ ##Technology Stack
+**🛠️ Technology Stack**
 
 Frontend: HTML, CSS, Bootstrap, Javascript
 
@@ -93,10 +93,10 @@ ORM: Entity Framework Core
 
 Authentication: Identity (Role-based Authorization)
 
-📌 ##Diagram:
+**📌 Diagram:**
 
 
-🚀 ##Installation & Setup
+**🚀 Installation & Setup**
 
 Clone the repo
 
@@ -129,7 +129,7 @@ Press F5 or dotnet run
 
 
 
-📈 ##Future Enhancements
+**📈 Future Enhancements**
 
 Online Payment Gateway Integration
 
@@ -139,7 +139,7 @@ Mobile App (Xamarin / React Native)
 
 Notification system (Email / SMS)
 
-👨‍💻 ##Author
-
-##Developed by Huzaifa Mustafa
+**👨‍💻 Author
+**
+**Developed by Huzaifa Mustafa**
 📌 For queries & collaboration: https://www.linkedin.com/in/muhammad-huzaifa-mustafa-77a96b266
