@@ -1,0 +1,115 @@
+﻿@model OBRS.Models.Contact
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<!-- Contact Start -->
+<div class="container-fluid contact py-5">
+    <div class="container py-5">
+
+        <!-- Section Title -->
+        <div class="text-center mx-auto pb-5 wow fadeInUp" data-wow-delay="0.1s" style="max-width: 800px;">
+            <h1 class="display-5 text-capitalize text-primary mb-3">Get In Touch</h1>
+            <p class="mb-0">
+                Have questions or need assistance? We're here to help.
+                Reach out to us using the contact details below or send us a quick message.
+            </p>
+        </div>
+
+        <!-- Success Message -->
+        @if (TempData["Success"] != null)
+        {
+            <div class="alert alert-success text-center">
+                @TempData["Success"]
+            </div>
+        }
+
+        <div class="row g-5">
+
+            <!-- Contact Form -->
+            <div class="col-xl-6 wow fadeInUp" data-wow-delay="0.3s">
+                <div class="bg-secondary p-5 rounded shadow-sm">
+                    <h4 class="text-white mb-4">Send Us a Message</h4>
+
+                    <form asp-action="Contact" asp-controller="Home" method="post">
+                        <div class="row g-4">
+                            <div class="col-md-6">
+                                <div class="form-floating">
+                                    <input asp-for="Name" class="form-control" placeholder="Your Name" />
+                                    <label asp-for="Name"></label>
+                                    <span asp-validation-for="Name" class="text-danger"></span>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-floating">
+                                    <input asp-for="Email" class="form-control" placeholder="Your Email" />
+                                    <label asp-for="Email"></label>
+                                    <span asp-validation-for="Email" class="text-danger"></span>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-floating">
+                                    <input asp-for="Phone" class="form-control" placeholder="Phone" />
+                                    <label asp-for="Phone"></label>
+                                    <span asp-validation-for="Phone" class="text-danger"></span>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-floating">
+                                    <input asp-for="Subject" class="form-control" placeholder="Subject" />
+                                    <label asp-for="Subject"></label>
+                                    <span asp-validation-for="Subject" class="text-danger"></span>
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <div class="form-floating">
+                                    <textarea asp-for="Message" class="form-control" placeholder="Leave a message here" style="height: 150px"></textarea>
+                                    <label asp-for="Message"></label>
+                                    <span asp-validation-for="Message" class="text-danger"></span>
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <button type="submit" class="btn btn-primary w-100 py-3">Send Message</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Social Media -->
+            <div class="col-xl-1 d-flex flex-xl-column align-items-center justify-content-center wow fadeInUp" data-wow-delay="0.4s">
+                <a class="btn btn-xl-square btn-light rounded-circle mb-3" href="#"><i class="fab fa-facebook-f"></i></a>
+                <a class="btn btn-xl-square btn-light rounded-circle mb-3" href="#"><i class="fab fa-twitter"></i></a>
+                <a class="btn btn-xl-square btn-light rounded-circle mb-3" href="#"><i class="fab fa-instagram"></i></a>
+                <a class="btn btn-xl-square btn-light rounded-circle" href="#"><i class="fab fa-linkedin-in"></i></a>
+            </div>
+
+            <!-- Branches -->
+            <div class="col-xl-5 wow fadeInUp" data-wow-delay="0.5s">
+                <div class="p-5 bg-light rounded shadow-sm">
+                    <div class="bg-white rounded p-4 mb-4 shadow-sm">
+                        <h4 class="mb-3">Branch Office 01</h4>
+                        <p><i class="fas fa-map-marker-alt text-primary me-2"></i>123 Street, New York, USA</p>
+                        <p><i class="fa fa-phone-alt text-primary me-2"></i>(+012) 3456 7890</p>
+                    </div>
+                    <div class="bg-white rounded p-4 mb-4 shadow-sm">
+                        <h4 class="mb-3">Branch Office 02</h4>
+                        <p><i class="fas fa-map-marker-alt text-primary me-2"></i>456 Avenue, Los Angeles, USA</p>
+                        <p><i class="fa fa-phone-alt text-primary me-2"></i>(+012) 9876 5432</p>
+                    </div>
+                    <div class="bg-white rounded p-4 shadow-sm">
+                        <h4 class="mb-3">Branch Office 03</h4>
+                        <p><i class="fas fa-map-marker-alt text-primary me-2"></i>789 Boulevard, Chicago, USA</p>
+                        <p><i class="fa fa-phone-alt text-primary me-2"></i>(+012) 1122 3344</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Contact End -->
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

@@ -1,0 +1,88 @@
+﻿@using OBRS.Models
+@model Booking
+
+@{
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="main-content">
+    <section class="section">
+        <div class="section-body">
+            <div class="row">
+                <div class="col-12 col-md-12 col-lg-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <h4>Update Booking</h4>
+                        </div>
+
+                        <form asp-controller="Admin" asp-action="UpdateBookings" method="post">
+                            <div class="card-body">
+
+                                <!-- Keep ID hidden -->
+                                <input type="hidden" asp-for="BookingId" />
+
+                                <div class="form-group">
+                                    <label asp-for="PassengerName"></label>
+                                    <input type="text" class="form-control" asp-for="PassengerName" readonly />
+                                </div>
+
+                                <div class="form-group">
+                                    <label asp-for="PassengerCNIC"></label>
+                                    <input type="text" class="form-control" asp-for="PassengerCNIC" readonly />
+                                </div>
+
+                                <div class="form-group">
+                                    <label asp-for="PassengerPhone"></label>
+                                    <input type="text" class="form-control" asp-for="PassengerPhone" readonly />
+                                </div>
+
+                                <!-- ✅ Show Final Fare (not bus.price object) -->
+                                <div class="form-group">
+                                    <label>Fare (PKR)</label>
+                                    <input type="text" class="form-control"
+                                           value="@(Model.bus?.price?.FinalFare.ToString("N2") ?? "N/A")"
+                                           readonly />
+                                </div>
+
+                                <div class="form-group">
+                                    <label asp-for="SeatNumber"></label>
+                                    <input type="text" class="form-control" asp-for="SeatNumber" readonly />
+                                </div>
+
+                                <div class="form-group">
+                                    <label asp-for="TravelDate"></label>
+                                    <input type="text" class="form-control"
+                                           value="@Model.TravelDate.ToString("dd-MMM-yyyy")" readonly />
+                                </div>
+
+                                <div class="form-group">
+                                    <label asp-for="BookingDate"></label>
+                                    <input type="text" class="form-control"
+                                           value="@Model.BookingDate.ToString("dd-MMM-yyyy")" readonly />
+                                </div>
+
+                                <!-- Editable only -->
+                                <div class="form-group">
+                                    <label asp-for="Status"></label>
+                                    <select asp-for="Status" class="form-control">
+                                        <option value="Booked">Booked</option>
+                                        <option value="Cancelled">Cancelled</option>
+                                        <option value="Completed">Completed</option>
+                                    </select>
+                                </div>
+
+                            </div>
+
+                            <div class="card-footer">
+                                <input type="submit" class="btn btn-primary" value="Update" />
+                                <a asp-controller="Admin" asp-action="ManageBookings" class="btn btn-secondary">Cancel</a>
+                            </div>
+                        </form>
+
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>

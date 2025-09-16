@@ -1,0 +1,105 @@
+﻿@model List<Buses>
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewData["Title"] = "Search Buses";
+    var cities = ViewBag.Cities as List<string>;
+}
+
+<div class="container mt-5">
+    <h2 class="mb-4 fw-bold text-center text-primary">Search Buses</h2>
+
+    <!-- 🔹 Filter Section -->
+    <div class="card shadow-lg border-0 rounded-4 p-4 mb-5 bg-light">
+        <form asp-action="SearchBuses" method="get" class="row g-3 align-items-end">
+
+            <div class="col-md-5">
+                <label class="form-label fw-semibold">From City</label>
+                <input type="text" name="fromCity" class="form-control form-control-lg rounded-3 shadow-sm" placeholder="Enter departure city" />
+            </div>
+
+            <div class="col-md-5">
+                <label class="form-label fw-semibold">To City</label>
+                <input type="text" name="toCity" class="form-control form-control-lg rounded-3 shadow-sm" placeholder="Enter destination city" />
+            </div>
+
+            <div class="col-md-2 d-grid">
+                <button type="submit" class="btn btn-danger btn-lg fw-bold rounded-3 shadow-sm">
+                    🔍 Search
+                </button>
+            </div>
+        </form>
+    </div>
+
+    <!-- 🔹 Results Section -->
+    @if (!Model.Any())
+    {
+        <div class="alert alert-warning text-center fw-semibold shadow-sm rounded-3">
+            ❌ No buses found for the selected route.
+        </div>
+    }
+    else
+    {
+        <div class="row g-4">
+            @foreach (var bus in Model)
+            {
+                var routeFare = bus.price?.FinalFare ?? 0;  
+                var finalFare = bus.PricePerSeat + routeFare;
+
+                <div class="col-md-6 col-lg-4">
+                    <div class="card h-100 shadow-lg border-0 rounded-4 bus-card">
+                        <!-- Image -->
+                        <div class="position-relative">
+                            <img src="~/images/@bus.BusImage" class="card-img-top rounded-top-4" alt="@bus.BusName" style="height: 200px; object-fit: cover;" />
+                            <span class="badge bg-danger position-absolute top-0 end-0 m-3 px-3 py-2 rounded-pill shadow">
+                                @bus.BusType
+                            </span>
+                        </div>
+
+                        <!-- Details -->
+                        <div class="card-body">
+                            <h5 class="fw-bold text-dark">@bus.BusName <small class="text-muted">(@bus.BusNumber)</small></h5>
+                            <p class="mb-1"><strong>Route:</strong> @bus.routes?.StartLocation → @bus.routes?.Destination</p>
+                            <p class="mb-1"><strong>Seats:</strong> @bus.TotalSeats (Available: @bus.AvailableSeats)</p>
+                            <p class="mb-1"><strong>Price/Seat:</strong> <span class="text-primary">@bus.PricePerSeat.ToString("C")</span></p>
+                            <p class="mb-1"><strong>Route Fare:</strong> <span class="text-warning">@routeFare.ToString("C")</span></p>
+                            <p class="mb-1"><strong>Departure:</strong> @bus.DepartureTime.ToString("g")</p>
+                            <p class="mb-1"><strong>Arrival:</strong> @bus.ArrivalTime.ToString("g")</p>
+                        </div>
+
+                        <!-- Footer -->
+                        <div class="card-footer bg-white border-0 d-flex justify-content-between align-items-center">
+                            <h5 class="text-success fw-bold mb-0">Final: @finalFare.ToString("C")</h5>
+                            @if(User.IsInRole("user")){
+                                <a asp-controller="Home"
+                                   asp-action="BookTicket"
+                                   asp-route-busId="@bus.BusId"
+                                   class="btn btn-danger fw-bold px-4 py-2 rounded-3 shadow-sm">
+                                    Book Now
+                                </a>
+                            }
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    }
+</div>
+
+<style>
+    /* 🔹 Card Hover Animation */
+    .bus-card {
+        transition: all 0.3s ease-in-out;
+    }
+    .bus-card:hover {
+        transform: translateY(-10px);
+        box-shadow: 0 12px 25px rgba(0, 0, 0, 0.15);
+    }
+
+    /* 🔹 Buttons Hover */
+    .btn-danger:hover {
+        background-color: #c82333;
+        transform: scale(1.05);
+        transition: 0.2s;
+    }
+</style>

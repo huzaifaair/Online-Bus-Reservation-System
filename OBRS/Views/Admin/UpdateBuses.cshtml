@@ -1,0 +1,103 @@
+﻿@using OBRS.Models
+@model Buses
+
+@{
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+<div class="main-content">
+    <section class="section">
+        <div class="section-body">
+            <div class="row">
+                <div class="col-12 col-md-12 col-lg-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <h4>Edit Buses</h4>
+                        </div>
+                        <form asp-controller="Admin" asp-action="UpdateBuses" method="post" enctype="multipart/form-data">
+                            <div class="card-body">
+                                <input type="hidden" asp-for="BusId" />
+                                <div class="form-group">
+                                    <label asp-for="BusNumber"></label>
+                                    <input type="text" class="form-control" asp-for="BusNumber" placeholder="Enter Bus Number" required>
+                                    <span asp-validation-for="BusNumber" class="text-danger"></span>
+                                </div>
+
+                                <div class="form-group">
+                                    <label asp-for="BusName"></label>
+                                    <input type="text" class="form-control" asp-for="BusName" placeholder="Enter Bus Name" required>
+                                    <span asp-validation-for="BusName" class="text-danger"></span>
+                                </div>
+
+                                <div class="form-group">
+                                    <label asp-for="BusImage"></label>
+                                    <input type="file" class="form-control" asp-for="BusImage">
+                                    <span asp-validation-for="BusImage" class="text-danger"></span>
+                                </div>
+
+                                <div class="form-group">
+                                    <label asp-for="Route_id">BusRoute</label>
+                                    <select asp-for="Route_id" class="form-control" asp-items="ViewBag.Routebuses" required>
+                                        <option value="">-- Select BusRoute --</option>
+                                    </select>
+                                    <span asp-validation-for="Route_id" class="text-danger"></span>
+                                </div>
+
+                                <div class="form-group">
+                                    <label asp-for="BusType"></label>
+                                    <select asp-for="BusType" class="form-control" required>
+                                        <option value="">-- Select Bus Type --</option>
+                                        <option value="AC">AC</option>
+                                        <option value="Non-AC">Non-AC</option>
+                                        <option value="Sleeper">Sleeper</option>
+                                    </select>
+                                    <span asp-validation-for="BusType" class="text-danger"></span>
+                                </div>
+
+                                <div class="form-group">
+                                    <label asp-for="TotalSeats"></label>
+                                    <input type="number" class="form-control" asp-for="TotalSeats" placeholder="Enter Total Seats" required>
+                                    <span asp-validation-for="TotalSeats" class="text-danger"></span>
+                                </div>
+
+                                <div class="form-group">
+                                    <label asp-for="AvailableSeats"></label>
+                                    <input type="number" class="form-control" asp-for="AvailableSeats" placeholder="Enter Available Seats" required>
+                                    <span asp-validation-for="AvailableSeats" class="text-danger"></span>
+                                </div>
+
+                                <div class="form-group">
+                                    <label asp-for="DepartureTime"></label>
+                                    <input type="datetime-local" class="form-control" asp-for="DepartureTime" required>
+                                    <span asp-validation-for="DepartureTime" class="text-danger"></span>
+                                </div>
+
+                                <div class="form-group">
+                                    <label asp-for="ArrivalTime"></label>
+                                    <input type="datetime-local" class="form-control" asp-for="ArrivalTime" required>
+                                    <span asp-validation-for="ArrivalTime" class="text-danger"></span>
+                                </div>
+
+                                <div class="form-group">
+                                    <label asp-for="PricePerSeat"></label>
+                                    <input type="number" step="0.01" class="form-control" asp-for="PricePerSeat" placeholder="Enter Price per Seat" required>
+                                    <span asp-validation-for="PricePerSeat" class="text-danger"></span>
+                                </div>
+
+                                <div class="form-group form-check">
+                                    <input type="checkbox" class="form-check-input" asp-for="IsActive" required />
+                                    <label class="form-check-label" asp-for="IsActive">Active</label>
+                                </div>
+                            </div>
+
+                            <div class="card-footer">
+                                <input type="submit" class="btn btn-primary" value="Update" />
+                                <a asp-controller="Admin" asp-action="Index" class="btn btn-secondary">Cancel</a>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+

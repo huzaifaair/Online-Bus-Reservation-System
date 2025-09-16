@@ -1,0 +1,158 @@
+﻿@using OBRS.Models
+@model List<Booking>
+
+@{
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<!-- Main Content -->
+<div class="main-content">
+    <section class="section">
+        <div class="section-body">
+            @* Flash messages *@
+            @{
+                if (TempData["update"] != null)
+                {
+                    <div class="alert alert-success" id="update" role="alert">@TempData["update"]</div>
+                }
+                if (TempData["danger"] != null)
+                {
+                    <div class="alert alert-danger" id="danger" role="alert">@TempData["danger"]</div>
+                }
+            }
+
+            <div class="row">
+                <div class="col-12 col-md-12 col-lg-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <h4>Manage Bookings</h4>
+                        </div>
+                        <div class="card-body p-0">
+                            <div class="table-responsive">
+                                <table class="table table-striped table-lg">
+                                    <thead>
+                                        <tr>
+                                            <th>#</th>
+                                            <th>Passenger</th>
+                                            <th>CNIC</th>
+                                            <th>Phone</th>
+                                            <th>Bus & Route</th>
+                                            <th>Seat</th>
+                                            <th>Fare (PKR)</th>
+                                            <th>Travel Date</th>
+                                            <th>Booking Date</th>
+                                            <th>Status</th>
+                                            <th>Update</th>
+                                            <th>Delete</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @{
+                                            var count = 1;
+                                            foreach (var booking in Model)
+                                            {
+                                                <tr>
+                                                    <td>@count</td>
+                                                    <td>@booking.PassengerName</td>
+                                                    <td>@booking.PassengerCNIC</td>
+                                                    <td>@booking.PassengerPhone</td>
+                                                    <td>@($"{booking.bus?.BusNumber} - {booking.bus?.routes?.RouteName}")</td>
+                                                    <td>@booking.SeatNumber</td>
+
+                                                    <!-- ✅ Show Final Fare -->
+                                                    <td>
+                                                        @(booking.bus?.price?.FinalFare != null
+                                                        ? booking.bus.price.FinalFare.ToString("N2")
+                                                        : "N/A")
+                                                    </td>
+
+                                                    <td>@booking.TravelDate.ToString("dd-MMM-yyyy")</td>
+                                                    <td>@booking.BookingDate.ToString("dd-MMM-yyyy")</td>
+
+                                                    <!-- ✅ Status with badges -->
+                                                    <td>
+                                                        @if (booking.Status == "Booked")
+                                                        {
+                                                            <span class="badge badge-success">Booked</span>
+                                                        }
+                                                        else if (booking.Status == "Cancelled")
+                                                        {
+                                                            <span class="badge badge-danger">Cancelled</span>
+                                                        }
+                                                        else if (booking.Status == "Completed")
+                                                        {
+                                                            <span class="badge badge-secondary">Completed</span>
+                                                        }
+                                                        else
+                                                        {
+                                                            <span class="badge badge-warning">@booking.Status</span>
+                                                        }
+                                                    </td>
+
+                                                    <!-- ✅ Action Buttons -->
+                                                    <td>
+                                                        <a asp-controller="Admin" asp-action="UpdateBookings" asp-route-id="@booking.BookingId"
+                                                           class="btn btn-primary btn-sm">Update</a>
+                                                    </td>
+                                                    <td>
+                                                        @if (booking.Status == "Completed")
+                                                        {
+                                                            <a asp-controller="Admin" asp-action="DeleteBookings" asp-route-id="@booking.BookingId"
+                                                               class="btn btn-danger btn-sm"
+                                                               onclick="return confirm('🛑 Are you sure you want to delete this booking?');">
+                                                                Delete
+                                                            </a>
+                                                        }
+                                                        else
+                                                        {
+                                                            <button class="btn btn-secondary btn-sm" disabled>Delete</button>
+                                                        }
+                                                    </td>
+                                                </tr>
+                                                count++;
+                                            }
+                                        }
+                                    </tbody>
+                                </table>
+
+                            </div>
+                        </div>
+
+                        <div class="card-footer text-right">
+                            <nav class="d-inline-block">
+                                <ul class="pagination mb-0">
+                                    <li class="page-item disabled">
+                                        <a class="page-link" href="#" tabindex="-1"><i class="fas fa-chevron-left"></i></a>
+                                    </li>
+                                    <li class="page-item active">
+                                        <a class="page-link" href="#">
+                                            1 <span class="sr-only">(current)</span>
+                                        </a>
+                                    </li>
+                                    <li class="page-item">
+                                        <a class="page-link" href="#">2</a>
+                                    </li>
+                                    <li class="page-item"><a class="page-link" href="#">3</a></li>
+                                    <li class="page-item">
+                                        <a class="page-link" href="#"><i class="fas fa-chevron-right"></i></a>
+                                    </li>
+                                </ul>
+                            </nav>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+
+<script>
+    let update = document.getElementById("update");
+    if(update) {
+        setTimeout(() => { update.style.display = "none"; }, 4500);
+    }
+    let danger = document.getElementById("danger");
+    if(danger) {
+        setTimeout(() => { danger.style.display = "none"; }, 4500);
+    }
+</script>

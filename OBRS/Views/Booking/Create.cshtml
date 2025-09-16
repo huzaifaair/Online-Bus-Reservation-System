@@ -1,0 +1,115 @@
+﻿@using OBRS.Models
+@model Booking
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml"; // agar admin layout nahi chahiye to ye use karo
+    var bus = ViewBag.Bus as OBRS.Models.Buses;
+    var bookedSeats = ViewBag.BookedSeats as List<int> ?? new List<int>();
+}
+
+<div class="main-content">
+    <section class="section">
+        <div class="section-body">
+            <div class="row">
+                <div class="col-12 col-md-10 offset-md-1">
+                    <div class="card">
+                        <div class="card-header">
+                            <h4>Create Booking</h4>
+                        </div>
+
+                        <form asp-controller="Booking" asp-action="Create" method="post">
+                            
+                            <div class="card-body">
+
+                                <!-- Keep BusId hidden -->
+                                <input type="hidden" asp-for="Bus_id" />
+                                <!-- Passenger Details -->
+                                <div class="form-group">
+                                    <label asp-for="PassengerName"></label>
+                                    <input type="text" class="form-control" asp-for="PassengerName" placeholder="Enter full name" />
+                                    <span asp-validation-for="PassengerName" class="text-danger"></span>
+                                </div>
+
+                                <div class="form-group">
+                                    <label asp-for="PassengerCNIC"></label>
+                                    <input type="text" class="form-control" asp-for="PassengerCNIC" placeholder="Enter CNIC" />
+                                    <span asp-validation-for="PassengerCNIC" class="text-danger"></span>
+                                </div>
+
+                                <div class="form-group">
+                                    <label asp-for="PassengerPhone"></label>
+                                    <input type="text" class="form-control" asp-for="PassengerPhone" placeholder="Enter phone number" />
+                                    <span asp-validation-for="PassengerPhone" class="text-danger"></span>
+                                </div>
+
+                                <!-- Bus & Fare -->
+                                <div class="form-group">
+                                    <label>Bus</label>
+                                    <input type="text" class="form-control" value="@bus?.BusName" readonly />
+                                </div>
+
+                                <div class="form-group">
+                                    <label>Price Per Seat (PKR)</label>
+                                    <input type="text" class="form-control"
+                                           value="@(bus?.PricePerSeat.ToString("N2") ?? "N/A")" readonly />
+                                </div>
+
+                                <div class="form-group">
+                                    <label>Route Fare (PKR)</label>
+                                    <input type="text" class="form-control"
+                                           value="@(bus?.price?.FinalFare.ToString("N2") ?? "N/A")" readonly />
+                                </div>
+
+                                <div class="form-group">
+                                    <label>Total Fare (PKR)</label>
+                                    <input type="text" class="form-control"
+                                           value="@(bus != null ? (bus.PricePerSeat + (bus.price?.FinalFare ?? 0)).ToString("N2") : "N/A")" readonly />
+                                </div>
+
+                                <!-- Seat Selection -->
+                                <div class="form-group">
+                                    <label asp-for="SeatNumber"></label>
+                                    <select asp-for="SeatNumber" class="form-control">
+                                        <option value="">-- Select Seat --</option>
+                                        @for (int i = 1; i <= bus?.TotalSeats; i++)
+                                        {
+                                            if (bookedSeats.Contains(i))
+                                            {
+                                                <option value="@i" disabled>@i (Booked)</option>
+                                            }
+                                            else
+                                            {
+                                                <option value="@i">@i</option>
+                                            }
+                                        }
+                                    </select>
+                                    <span asp-validation-for="SeatNumber" class="text-danger"></span>
+                                </div>
+
+                                <!-- Travel Date -->
+                                <div class="form-group">
+                                    <label asp-for="TravelDate"></label>
+                                    <input type="date" class="form-control" asp-for="TravelDate" />
+                                    <span asp-validation-for="TravelDate" class="text-danger"></span>
+                                </div>
+
+                            </div>
+
+                            <div class="card-footer text-right">
+                                <input type="submit" class="btn btn-success" value="Book Now" />
+                                <a asp-controller="Home" asp-action="Index" class="btn btn-secondary">Cancel</a>
+                            </div>
+                        </form>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}
