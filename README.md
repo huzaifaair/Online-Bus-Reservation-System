@@ -1,4 +1,4 @@
-🚌 ###Online Bus Reservation System (OBRS)
+🚌 ### Online Bus Reservation System (OBRS)
 
 A full-stack web application built with ASP.NET Core MVC and SQL Server that simplifies bus ticket booking, seat management, and revenue tracking.
 
